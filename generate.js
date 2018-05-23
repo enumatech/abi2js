@@ -30,7 +30,7 @@ function ${prefix}${method.name} (...args) {
 // return Abi.rawEncode(${JSON.stringify(abi)}, "${method.name}(${parameters})", args)
 }
 
-/**
+/** Generate JS function code for all methods in an ABI definition.
  * @param {ContractInfo} abi
  * @param {string} [prefix] An optional prefix for the generated functions
  * @returns {string} the JS code that checks and encodes calls to all contract methods
