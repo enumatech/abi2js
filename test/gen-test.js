@@ -30,6 +30,10 @@ describe('Generator', () => {
  */`)
     })
 
+    it('can eval()', () => {
+      eval(code)
+    })
+
     it('refers to correct method ID', () => {
       eval(code)
       Assert.strictEqual(encode_Method('asdf').toString('hex').slice(0, 8), '06f7365f')
