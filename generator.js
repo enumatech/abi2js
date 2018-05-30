@@ -13,6 +13,9 @@
  * @returns {string} the JS code that checks and encodes calls to the specified method
  */
 exports.generate1 = function (method, prefix = 'encode_') {
+  if (method.type !== 'function') {
+    throw Error('Not a function: ' + method.name)
+  }
   // const parameters = method.inputs.map(input => `${input.type} ${input.name}`).join(',')
   const onlyTypes = JSON.stringify(method.inputs.map(input => input.type))
   const paramDoc = method.inputs.map(input => `\n * @param {${input.type}} ${input.name}`)
@@ -35,10 +38,26 @@ function ${prefix}${method.name} (...args) {
  * @param {string} [prefix] An optional prefix for the generated functions
  * @returns {string} the JS code that checks and encodes calls to all contract methods
  */
-exports.generate = function (abi, prefix) {
+exports.generateFunctions = function (abi, prefix) {
   let code = ''
   for (var method of abi) {
-    code += exports.generate1(method, prefix)
+    if (method.type === 'function') {
+      code += exports.generate1(method, prefix)
+    }
   }
   return code
+}
+
+/** Generate JS object for all methods in an ABI definition.
+ * @param {ContractInfo} abi
+ * @returns {string} the JS code that checks and encodes calls to all contract methods
+ */
+exports.generateObject = function (abi) {
+  let code = '({\n'
+  for (var method of abi) {
+    if (method.type === 'function') {
+      code += method.name + ': ' + exports.generate1(method, '') + ',\n'
+    }
+  }
+  return code + '})'
 }

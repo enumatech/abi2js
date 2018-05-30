@@ -30,6 +30,17 @@
     "ethereumjs-abi": "^0.6.5"
   },
   "eslintConfig": {
-    "extends": "standard"
+    "extends": "standard",
+    "plugins": [
+      "hapi"
+    ],
+    "rules": {
+      "valid-jsdoc": [
+        "error"
+      ],
+      "hapi/hapi-capitalize-modules": [
+        "error"
+      ]
+    }
   }
 }
